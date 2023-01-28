@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.abstruck.mc.morehearts.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "morehearts.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
