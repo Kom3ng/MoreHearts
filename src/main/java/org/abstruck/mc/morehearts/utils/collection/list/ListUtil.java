@@ -36,7 +36,7 @@ public class ListUtil {
 
     public static <E> void shrinkFromBehind(@NotNull List<E> list, int num){
         if (num > list.size()){
-            list.clear();
+            nonNullClear(list);
             return;
         }
         list = list.subList(0, list.size() - num);
@@ -60,5 +60,16 @@ public class ListUtil {
         for (int i = 0; i<times;i++){
             runnable.run();
         }
+    }
+
+    public static <E> void nonNullClear(List<E> list){
+        list = new ArrayList<>();
+    }
+
+    public static <E> List<E> removeNull(@NotNull List<E> list){
+        while (list.contains(null)){
+            list.remove(null);
+        }
+        return list;
     }
 }

@@ -21,6 +21,13 @@ public class PlayerCapability implements IPlayerCapability{
     NbtData<List<AttachHeart>> attachHearts = new NbtData<>("attach_hearts",new ArrayList<>());
     NbtData<List<ExtraHeart>> extraHearts = new NbtData<>("extra_hearts", new ArrayList<>());
 
+    private NbtData<List<AttachHeart>> getVanillaAttachHearts(){
+        return attachHearts;
+    }
+    private NbtData<List<ExtraHeart>> getVanillaExtraHearts(){
+        return extraHearts;
+    }
+
     @Override
     public @NotNull List<IHeart> getHearts() {
         List<IHeart> result = new ArrayList<>(getAttachHearts());
@@ -30,12 +37,12 @@ public class PlayerCapability implements IPlayerCapability{
 
     @Override
     public @NotNull List<AttachHeart> getAttachHearts() {
-        return attachHearts.getValue();
+        return ListUtil.removeNull(getVanillaAttachHearts().getValue());
     }
 
     @Override
     public @NotNull List<ExtraHeart> getExtraHearts() {
-        return extraHearts.getValue();
+        return ListUtil.removeNull(getVanillaExtraHearts().getValue());
     }
 
     @Override
@@ -56,18 +63,18 @@ public class PlayerCapability implements IPlayerCapability{
 
     @Override
     public void setAttachHearts(@NotNull List<AttachHeart> hearts) {
-        attachHearts.setValue(hearts);
+        getVanillaAttachHearts().setValue(hearts);
     }
 
     @Override
     public void setExtraHearts(@NotNull List<ExtraHeart> hearts) {
-        extraHearts.setValue(hearts);
+        getVanillaExtraHearts().setValue(hearts);
     }
 
     @Override
     public float getAllExtraHealth() {
         final float BASE = 2.0F;
-        AtomicReference<Float> result = new AtomicReference<>();
+        AtomicReference<Float> result = new AtomicReference<>(0.0F);
         getExtraHearts().forEach(eh -> result.set(result.get() + BASE / eh.getDecelerationMagnification()));
         return result.get();
     }
@@ -109,8 +116,8 @@ public class PlayerCapability implements IPlayerCapability{
             extraHeartsNbt.putString(String.valueOf(index), extraHeart.getRegistryName());
         });
 
-        nbt.put(attachHearts.getKey(), attachHeartsNbt);
-        nbt.put(extraHearts.getKey(), extraHeartsNbt);
+        nbt.put(getVanillaAttachHearts().getKey(), attachHeartsNbt);
+        nbt.put(getVanillaExtraHearts().getKey(), extraHeartsNbt);
 
         return nbt;
     }
@@ -120,8 +127,8 @@ public class PlayerCapability implements IPlayerCapability{
         List<AttachHeart> attachHeartList = new ArrayList<>();
         List<ExtraHeart> extraHeartList = new ArrayList<>();
 
-        CompoundNBT attachHeartsNbt = nbt.getCompound(attachHearts.getKey());
-        CompoundNBT extraHeartsNbt = nbt.getCompound(extraHearts.getKey());
+        CompoundNBT attachHeartsNbt = nbt.getCompound(getVanillaAttachHearts().getKey());
+        CompoundNBT extraHeartsNbt = nbt.getCompound(getVanillaExtraHearts().getKey());
 
         int index = 0;
         while (attachHeartsNbt.contains(String.valueOf(index))){
@@ -137,8 +144,8 @@ public class PlayerCapability implements IPlayerCapability{
             index++;
         }
 
-        this.attachHearts.setValue(attachHeartList);
-        this.extraHearts.setValue(extraHeartList);
+        this.getVanillaAttachHearts().setValue(ListUtil.removeNull(attachHeartList));
+        this.getVanillaExtraHearts().setValue(ListUtil.removeNull(extraHeartList));
     }
 
 

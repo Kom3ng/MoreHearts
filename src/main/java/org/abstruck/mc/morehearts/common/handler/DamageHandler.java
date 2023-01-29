@@ -91,16 +91,17 @@ public class DamageHandler {
     }
 
     private static void hurtAttachHeart(@NotNull LivingHurtEvent event, PlayerEntity player, List<AttachHeart> attachHearts, float damageAfterDeal, float damageLeft, int index) {
-        while (damageLeft>0.0F && index >= 0){
-            damageLeft -= 2.0F/attachHearts.get(index).getDecelerationMagnification();
+        while (index >= 0){
+            float offset = 2.0F/attachHearts.get(index).getDecelerationMagnification();
             attachHearts.get(index).activate(event);
-            damageAfterDeal += 2.0F*attachHearts.get(index).getDecelerationMagnification();
+            if (damageLeft<offset){
+                damageAfterDeal += damageLeft*attachHearts.get(index).getDecelerationMagnification();
+                break;
+            }
+            damageLeft -= offset;
+            damageAfterDeal += 2.0F;
             index--;
         }
         event.setAmount(damageAfterDeal);
-    }
-
-    public static void hurtDebug(@NotNull LivingHurtEvent event){
-        System.out.println(event.getEntity().getDisplayName()+" hurt "+event.getAmount());
     }
 }

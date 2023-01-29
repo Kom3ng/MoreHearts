@@ -30,7 +30,7 @@ public class CapabilityHandler {
         PlayerEntity player = event.getPlayer();
         World level = player.getCommandSenderWorld();
 
-        if (level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && event.isWasDeath()) return;
+        if (!level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && event.isWasDeath()) return;
 
         LazyOptional<IPlayerCapability> oldCap = event.getOriginal().getCapability(ModCapability.PLAYER_CAP);
         LazyOptional<IPlayerCapability> newCap = event.getPlayer().getCapability(ModCapability.PLAYER_CAP);
