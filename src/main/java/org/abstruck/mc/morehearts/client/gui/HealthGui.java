@@ -33,8 +33,8 @@ public class HealthGui extends IngameGui {
     public static HealthGui INSTANCE = new HealthGui(Minecraft.getInstance());
     private static final ResourceLocation HEART_ICON = new ResourceLocation(ModUtil.MOD_ID,"textures/gui/hearts.png");
 
-    public static int left_height = ForgeIngameGui.left_height;
-    public static int right_height = ForgeIngameGui.right_height;
+    public static int left_height = 39;
+    public static int right_height = 39;
 
     private HealthGui(Minecraft mc){
         super(mc);
@@ -48,9 +48,11 @@ public class HealthGui extends IngameGui {
         if (player == null) return;
 
         player.getCapability(ModCapability.PLAYER_CAP).ifPresent((cap) -> {
+            RenderSystem.color4f(1.0f,1.0f,1.0f,1.0f);
             bindHeartIcon();
 
-            RenderSystem.enableBlend();
+            left_height = 39;
+            right_height = 39;
 
             //玩家当前血量
             int health = getHealth(player);
@@ -93,19 +95,17 @@ public class HealthGui extends IngameGui {
                 int x = getX(left,index);
                 int y = getY(extraHeartRowHeight, extraHeartsTop, row);
 
-                blit(mStack,x,y,extraHeart.getUOffSet(),extraHeart.getVOffSet(),9,9);
+                blit(mStack,x,y,extraHeart.getUOffSet(),extraHeart.getVOffSet(),9,9,256,256);
             });
 
-            blitAttachHearts(mStack, health, healthMax, absorb, rowHeight, left, top, regen, attachHearts);
+            blitAttachHearts(mStack, health, rowHeight, left, top, regen, attachHearts);
 
-            RenderSystem.disableBlend();
         });
     }
 
-    private void blitAttachHearts(@NotNull MatrixStack mStack, int health, Float healthMax, float absorb, int rowHeight, int left, int top, int regen, List<AttachHeart> attachHearts) {
+    private void blitAttachHearts(@NotNull MatrixStack mStack, int health,  int rowHeight, int left, int top, int regen, @NotNull List<AttachHeart> attachHearts) {
         //从血量的最大值渲染
-        for (int heartIndex = MathHelper.ceil((healthMax + absorb) / 2.0F) - 1; heartIndex >= 0; --heartIndex) {
-            if (!(heartIndex < attachHearts.size())) continue;
+        for (int heartIndex = attachHearts.size() - 1; heartIndex >= 0; --heartIndex) {
 
             int row = getRow(heartIndex);
             int x = getX(left, heartIndex);
@@ -115,8 +115,7 @@ public class HealthGui extends IngameGui {
             y = lowHealthShake(health, y);
             y = ifRegen(regen, heartIndex, y);
 
-            blit(mStack, x, y, attachHearts.get(heartIndex).getUOffSet(), attachHearts.get(heartIndex).getVOffSet(), 9, 9);
-
+            blit(mStack, x, y, attachHearts.get(heartIndex).getUOffSet(), attachHearts.get(heartIndex).getVOffSet(), 9, 9,256,256);
         }
     }
 

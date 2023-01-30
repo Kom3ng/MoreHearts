@@ -5,6 +5,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.abstruck.mc.morehearts.common.item.heart.BoneHeartItem;
+import org.abstruck.mc.morehearts.common.item.heart.RedHeartContainer;
 import org.abstruck.mc.morehearts.common.item.heart.SoulHeartItem;
 import org.abstruck.mc.morehearts.common.item.heart.ZombieHeartItem;
 import org.abstruck.mc.morehearts.utils.ModUtil;
@@ -15,4 +16,5 @@ public class ItemInit {
     public static final RegistryObject<Item> ZOMBIE_HEART = REGISTER.register("zombie_heart", ZombieHeartItem::new);
     public static final RegistryObject<Item> BONE_HEART = REGISTER.register("bone_heart", BoneHeartItem::new);
     public static final RegistryObject<Item> SOUL_HEART = REGISTER.register("soul_heart", SoulHeartItem::new);
+    public static final RegistryObject<Item> RED_HEART_CONTAINER = REGISTER.register("red_heart_container", RedHeartContainer::new);
 }

@@ -16,7 +16,7 @@ public class SoulHeart extends ExtraHeart{
 
     @Override
     public int getVOffSet() {
-        return 0;
+        return 9;
     }
 
     @Override

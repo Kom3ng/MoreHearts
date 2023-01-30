@@ -11,7 +11,7 @@ public class ZombieHeart extends AttachHeart{
 
     @Override
     public int getUOffSet() {
-        return 0;
+        return 9;
     }
 
     @Override

@@ -9,9 +9,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class BoneHeart extends AttachHeart{
-    private static int uOffSet;
-    private static int vOffSet;
-
     @Override
     public @NotNull String getRegistryName() {
         return "bone_heart";
@@ -21,12 +18,12 @@ public class BoneHeart extends AttachHeart{
 
     @Override
     public int getUOffSet(){
-        return uOffSet;
+        return 0;
     }
 
     @Override
     public int getVOffSet(){
-        return vOffSet;
+        return 0;
     }
 
     @Override
