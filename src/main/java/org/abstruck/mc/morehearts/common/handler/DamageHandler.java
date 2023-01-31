@@ -1,12 +1,16 @@
 package org.abstruck.mc.morehearts.common.handler;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
 import org.abstruck.mc.morehearts.common.capability.ModCapability;
 import org.abstruck.mc.morehearts.common.capability.heart.AttachHeart;
 import org.abstruck.mc.morehearts.common.capability.heart.ExtraHeart;
+import org.abstruck.mc.morehearts.common.event.ExtraHeartChangeEvent;
+import org.abstruck.mc.morehearts.common.event.ModEventBus;
 import org.abstruck.mc.morehearts.utils.collection.list.ListUtil;
 import org.abstruck.mc.morehearts.utils.heart.HeartUtil;
 import org.jetbrains.annotations.NotNull;
@@ -37,9 +41,11 @@ public class DamageHandler {
                     event.setAmount(event.getAmount() - cap.getAllExtraHealth());
                     //清空额外心
                     cap.setExtraHearts(new ArrayList<>());
+
                     //激活每一个额外心
                     extraHearts.forEach(eh -> eh.activate(event));
 
+                    ModEventBus.postSynchronousEvent(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),new ExtraHeartChangeEvent(true,cap.getExtraHearts()));
 //                    onHurt(event);
                 }else {
                     //额外心可以抵消所有伤害时的逻辑
@@ -53,9 +59,10 @@ public class DamageHandler {
                         //将伤害减去一颗心低效的伤害
                         damage.set(damage.get()-2/extraHeart.getDecelerationMagnification());
                     }));
-
+                    ModEventBus.postSynchronousEvent(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),new ExtraHeartChangeEvent(true,cap.getExtraHearts()));
                     //将伤害设为0
                     event.setAmount(0.0F);
+
                     return;
                 }
             }

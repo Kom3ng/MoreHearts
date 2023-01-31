@@ -26,23 +26,29 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class HealthGui extends IngameGui {
-    public static HealthGui INSTANCE = new HealthGui(Minecraft.getInstance());
+public class HealthGui extends AbstractGui {
     private static final ResourceLocation HEART_ICON = new ResourceLocation(ModUtil.MOD_ID,"textures/gui/hearts.png");
+    public static HealthGui INSTANCE = new HealthGui(Minecraft.getInstance().gui);
 
     public static int left_height = 39;
     public static int right_height = 39;
+    private Minecraft minecraft;
+    private IngameGui gui;
+    private Random random = new Random();
 
-    private HealthGui(Minecraft mc){
-        super(mc);
+    public HealthGui(IngameGui gui){
+        this.minecraft = Minecraft.getInstance();
+        this.gui = gui;
     }
 
     public void render(@NotNull MatrixStack mStack){
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
+        this.random.setSeed(gui.getGuiTicks() * 312871L);
+        int width = minecraft.getWindow().getGuiScaledWidth();
+        int height = minecraft.getWindow().getGuiScaledHeight();
 
         PlayerEntity player = (PlayerEntity)this.minecraft.getCameraEntity();
         if (player == null) return;
@@ -88,7 +94,8 @@ public class HealthGui extends IngameGui {
 
             int extraHeartsRows = MathHelper.ceil(extraHearts.size() / 10.0F);
             int extraHeartRowHeight = countRowHeight(extraHeartsRows);
-            int extraHeartsTop = top - extraHeartsRows * extraHeartRowHeight;
+            int extraHeartsTop = top - rowHeight * healthRows;
+
 
             ListUtil.reverseForEachWithIndex(extraHearts, (index, extraHeart) -> {
                 int row = getRow(index);
@@ -149,7 +156,7 @@ public class HealthGui extends IngameGui {
     private int countRegen(@NotNull PlayerEntity player) {
         int regen = -1;
         if (player.hasEffect(Effects.REGENERATION)) {
-            regen = tickCount % 25;
+            regen = gui.getGuiTicks() % 25;
         }
         return regen;
     }
@@ -199,7 +206,7 @@ public class HealthGui extends IngameGui {
     }
 
     private int lowHealthShake(int health, int y) {
-        if (health <= 4) y += random.nextInt(2);
+        if (health <= 4) y +=  random.nextInt(2);
         return y;
     }
 

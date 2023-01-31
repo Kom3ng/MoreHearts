@@ -1,14 +1,13 @@
 package org.abstruck.mc.morehearts.init;
 
-import org.abstruck.mc.morehearts.common.capability.heart.BoneHeart;
-import org.abstruck.mc.morehearts.common.capability.heart.HeartRegister;
-import org.abstruck.mc.morehearts.common.capability.heart.SoulHeart;
-import org.abstruck.mc.morehearts.common.capability.heart.ZombieHeart;
+import org.abstruck.mc.morehearts.common.capability.heart.*;
 
 public class HeartsInit {
     public static void init(){
         HeartRegister.INSTANCE.registerHeartFactory(BoneHeart::new);
         HeartRegister.INSTANCE.registerHeartFactory(ZombieHeart::new);
         HeartRegister.INSTANCE.registerHeartFactory(SoulHeart::new);
+        HeartRegister.INSTANCE.registerHeartFactory(EvilHeart::new);
+        HeartRegister.INSTANCE.registerHeartFactory(CreeperHeart::new);
     }
 }

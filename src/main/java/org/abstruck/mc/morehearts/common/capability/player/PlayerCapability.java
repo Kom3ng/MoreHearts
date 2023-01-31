@@ -1,5 +1,6 @@
 package org.abstruck.mc.morehearts.common.capability.player;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;

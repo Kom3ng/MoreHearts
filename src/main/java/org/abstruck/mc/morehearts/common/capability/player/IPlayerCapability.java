@@ -1,11 +1,13 @@
 package org.abstruck.mc.morehearts.common.capability.player;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.abstruck.mc.morehearts.common.capability.heart.AttachHeart;
 import org.abstruck.mc.morehearts.common.capability.heart.ExtraHeart;
 import org.abstruck.mc.morehearts.common.capability.heart.IHeart;
+import org.abstruck.mc.morehearts.utils.data.ChangeData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
