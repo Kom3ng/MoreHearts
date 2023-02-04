@@ -9,5 +9,6 @@ public class HeartsInit {
         HeartRegister.INSTANCE.registerHeartFactory(SoulHeart::new);
         HeartRegister.INSTANCE.registerHeartFactory(EvilHeart::new);
         HeartRegister.INSTANCE.registerHeartFactory(CreeperHeart::new);
+        HeartRegister.INSTANCE.registerHeartFactory(PigHeart::new);
     }
 }

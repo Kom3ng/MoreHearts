@@ -1,6 +1,8 @@
 package org.abstruck.mc.morehearts.common.capability.heart;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.Explosion;
@@ -30,6 +32,8 @@ public class CreeperHeart extends ExtraHeart{
 
     @Override
     public void activate(@NotNull LivingHurtEvent event) {
-        event.getEntityLiving().level.explode(event.getEntity(),0,0,0,4,true, Explosion.Mode.BREAK);
+        if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        Entity attackEntity = event.getSource().getEntity();
+        attackEntity.level.explode(event.getEntity(),attackEntity.getX(),attackEntity.getY(),attackEntity.getZ(),4,true, Explosion.Mode.BREAK);
     }
 }

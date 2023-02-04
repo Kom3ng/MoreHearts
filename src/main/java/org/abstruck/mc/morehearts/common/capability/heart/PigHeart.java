@@ -28,7 +28,7 @@ public class PigHeart extends AttachHeart{
     }
 
     @Override
-    public void activate(LivingHurtEvent event) {
+    public void activate(@NotNull LivingHurtEvent event) {
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         player.level.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.PIG_AMBIENT, SoundCategory.AMBIENT,1.0F,1.0F);
     }

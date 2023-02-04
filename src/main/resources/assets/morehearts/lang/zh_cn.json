@@ -2,5 +2,9 @@
   "item.morehearts.zombie_heart": "尸心",
   "item.morehearts.soul_heart": "魂心",
   "item.morehearts.bone_heart": "骨心",
-  "itemGroup.morehearts.hearts": "更多的心"
+  "itemGroup.hearts": "更多的心",
+  "item.morehearts.creeper_heart": "苦力怕心",
+  "item.morehearts.pig_heart": "猪心",
+  "item.morehearts.evil_heart": "恶心",
+  "item.morehearts.red_heart_container": "红心"
 }

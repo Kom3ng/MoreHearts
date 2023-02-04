@@ -2,6 +2,7 @@ package org.abstruck.mc.morehearts.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import javafx.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IngameGui;
@@ -38,15 +39,16 @@ public class HealthGui extends AbstractGui {
     public static int right_height = 39;
     private Minecraft minecraft;
     private IngameGui gui;
-    private Random random = new Random();
+    public Random random = new Random();
+    public List<Pair<Integer,Integer>> heartPos;
 
     public HealthGui(IngameGui gui){
         this.minecraft = Minecraft.getInstance();
         this.gui = gui;
+        heartPos = new ArrayList<>();
     }
 
     public void render(@NotNull MatrixStack mStack){
-        this.random.setSeed(gui.getGuiTicks() * 312871L);
         int width = minecraft.getWindow().getGuiScaledWidth();
         int height = minecraft.getWindow().getGuiScaledHeight();
 
